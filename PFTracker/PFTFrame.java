@@ -9,24 +9,28 @@ public class PFTFrame extends JFrame
 {
    private ActorPanel[] panel;
    private LabelPanel labelPanel;
-   private JPanel buttonPanel;
+   private ButtonPanel buttonPanel;
+   private static final int ACTOR_ROWS = 12;
    
    public PFTFrame()
    {
       super();
       setSize(1600, 800);
-      setLayout(new GridLayout(14, 1));
+      setLayout(new GridLayout(ACTOR_ROWS + 2, 1));
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       
       labelPanel = new LabelPanel();
       add(labelPanel);
       
-      panel = new ActorPanel[12];
-      for(int i = 0; i < panel.length; i++)
+      panel = new ActorPanel[ACTOR_ROWS];
+      for(int i = 0; i < ACTOR_ROWS; i++)
       {
          panel[i] = new ActorPanel();
          add(panel[i]);
       }
+      
+      buttonPanel = new ButtonPanel(this);
+      add(buttonPanel);
       
       setVisible(true);
    }

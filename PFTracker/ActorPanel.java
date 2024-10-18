@@ -8,6 +8,7 @@ import javax.swing.*;
 public class ActorPanel extends JPanel implements ComponentListener
 {
 	private Actor actor;
+   private JButton clearB;
    private JTextField nameF;
    private JTextField initF;
    private JCheckBox[] actionCB;
@@ -19,7 +20,7 @@ public class ActorPanel extends JPanel implements ComponentListener
 	public Actor getActor(){return actor;}
 
 
-	public void setActor(Actor a){actor = a;}
+	public void setActor(Actor a){actor = a; setFormFromActor();}
 
 
    public ActorPanel()
@@ -27,6 +28,10 @@ public class ActorPanel extends JPanel implements ComponentListener
       super();
       actor = new Actor();
       setLayout(null);
+      
+      clearB = new JButton("X");
+      clearB.setFocusable(false);
+      add(clearB);
       
       nameF = new JTextField("");
       add(nameF);
@@ -40,12 +45,15 @@ public class ActorPanel extends JPanel implements ComponentListener
       for(int i = 0; i < actionCB.length; i++)
       {
          actionCB[i] = new JCheckBox();
+         actionCB[i].setHorizontalAlignment(SwingConstants.CENTER);
+         actionCB[i].setFocusable(false);
          actionPanel.add(actionCB[i]);
       }
       add(actionPanel);
       
       reactionCB = new JCheckBox();
       reactionCB.setHorizontalAlignment(SwingConstants.CENTER);
+      reactionCB.setFocusable(false);
       add(reactionCB);
       
       notesF = new JTextField("");
@@ -57,14 +65,51 @@ public class ActorPanel extends JPanel implements ComponentListener
       resizeComponents();
    }
    
+   public int getInit()
+   {
+      int init = Actor.NULL_INIT;
+      try
+      {
+         init = Integer.parseInt(initF.getText());
+      }
+      catch(Exception ex){}
+      return init;
+   }
+   
+   public int getActionsSpent()
+   {
+      int actions = 0;
+      for(int i = 0; i < actionCB.length; i++)
+         if(actionCB[i].isSelected())
+            actions++;
+      return actions;
+   }
+   
+   public void setActorFromForm()
+   {
+//       actor.setName(nameF.getText());
+//       private JTextField initF;
+//       private JCheckBox[] actionCB;
+//       private JCheckBox reactionCB;
+//       private JTextField notesF;
+   }
+   
+   private void setFormFromActor()
+   {
+   
+   }
+   
    public void resizeComponents()
    {
       int height = getHeight();
       int widthSegment = getWidth() / 15;
       int inset = 0;
       
-      nameF.setSize(widthSegment * 4, height);
-      nameF.setLocation(widthSegment * 0, 0);
+      clearB.setSize(widthSegment, height);
+      clearB.setLocation(widthSegment * 0, 0);
+      
+      nameF.setSize(widthSegment * 3, height);
+      nameF.setLocation(widthSegment * 1, 0);
       
       initF.setSize(widthSegment, height);
       initF.setLocation(widthSegment * 4, 0);
