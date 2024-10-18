@@ -2,7 +2,7 @@ package PFTracker;
 
 public class Actor
 {
-   public static final int NULL_INIT = 100;
+   public static final int NULL_INIT = -100;
 	private String name;
 	private String notes;
 	private int actionsSpent;

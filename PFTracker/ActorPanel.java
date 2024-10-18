@@ -41,6 +41,7 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       add(nameF);
       
       initF = new JTextField("");
+      initF.setHorizontalAlignment(JTextField.CENTER);
       initF.getDocument().addDocumentListener(this);
       add(initF);
       
@@ -132,20 +133,29 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       updateF = true;
    }
    
+   public Font getFont()
+   {
+      return new Font(new JTextField().getFont().getFontName(), Font.PLAIN, getHeight() / 2);
+   }
+   
    public void resizeComponents()
    {
       int height = getHeight();
       int widthSegment = getWidth() / 15;
       int inset = 0;
+      Font newFont = getFont();
       
       clearB.setSize(widthSegment, height);
       clearB.setLocation(widthSegment * 0, 0);
+      clearB.setFont(newFont);
       
       nameF.setSize(widthSegment * 3, height);
       nameF.setLocation(widthSegment * 1, 0);
+      nameF.setFont(newFont);
       
       initF.setSize(widthSegment, height);
       initF.setLocation(widthSegment * 4, 0);
+      initF.setFont(newFont);
       
       actionPanel.setSize(widthSegment, height);
       actionPanel.setLocation(widthSegment * 5, 0);
@@ -155,6 +165,7 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       
       notesF.setSize(widthSegment * 8, height);
       notesF.setLocation(widthSegment * 7, 0);
+      notesF.setFont(newFont);
       repaint();
    }
    
