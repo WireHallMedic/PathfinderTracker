@@ -1,11 +1,11 @@
 package PFTracker;
 
-import java.util.*;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
+import javax.swing.event.*;
 
-public class ActorPanel extends JPanel implements ComponentListener
+public class ActorPanel extends JPanel implements ComponentListener, ActionListener, DocumentListener
 {
 	private Actor actor;
    private JButton clearB;
@@ -15,6 +15,7 @@ public class ActorPanel extends JPanel implements ComponentListener
    private JCheckBox reactionCB;
    private JTextField notesF;
    private JPanel actionPanel;
+   private boolean updateF;
 
 
 	public Actor getActor(){return actor;}
@@ -28,15 +29,19 @@ public class ActorPanel extends JPanel implements ComponentListener
       super();
       actor = new Actor();
       setLayout(null);
+      updateF = true;
       
       clearB = new JButton("X");
       clearB.setFocusable(false);
+      clearB.addActionListener(this);
       add(clearB);
       
       nameF = new JTextField("");
+      nameF.getDocument().addDocumentListener(this);
       add(nameF);
       
       initF = new JTextField("");
+      initF.getDocument().addDocumentListener(this);
       add(initF);
       
       actionCB = new JCheckBox[3];
@@ -47,6 +52,7 @@ public class ActorPanel extends JPanel implements ComponentListener
          actionCB[i] = new JCheckBox();
          actionCB[i].setHorizontalAlignment(SwingConstants.CENTER);
          actionCB[i].setFocusable(false);
+         actionCB[i].addActionListener(this);
          actionPanel.add(actionCB[i]);
       }
       add(actionPanel);
@@ -54,9 +60,11 @@ public class ActorPanel extends JPanel implements ComponentListener
       reactionCB = new JCheckBox();
       reactionCB.setHorizontalAlignment(SwingConstants.CENTER);
       reactionCB.setFocusable(false);
+      reactionCB.addActionListener(this);
       add(reactionCB);
       
       notesF = new JTextField("");
+      notesF.getDocument().addDocumentListener(this);
       add(notesF);
       
       addComponentListener(this);
@@ -65,7 +73,7 @@ public class ActorPanel extends JPanel implements ComponentListener
       resizeComponents();
    }
    
-   public int getInit()
+   public int getInitiative()
    {
       int init = Actor.NULL_INIT;
       try
@@ -87,16 +95,30 @@ public class ActorPanel extends JPanel implements ComponentListener
    
    public void setActorFromForm()
    {
-//       actor.setName(nameF.getText());
-//       private JTextField initF;
-//       private JCheckBox[] actionCB;
-//       private JCheckBox reactionCB;
-//       private JTextField notesF;
+       actor.setName(nameF.getText());
+       actor.setInitiative(getInitiative());
+       actor.setActionsSpent(getActionsSpent());
+       actor.setReactionSpent(reactionCB.isSelected());
+       actor.setNotes(notesF.getText());
    }
    
    private void setFormFromActor()
    {
-   
+      updateF = false;
+      
+      nameF.setText(actor.getName());
+      initF.setText(actor.getInitiative() + "");
+      for(int i = 0; i < actionCB.length; i++)
+      {
+         if(i < actor.getActionsSpent())
+            actionCB[i].setSelected(true);
+         else
+            actionCB[i].setSelected(false);
+      }
+      reactionCB.setSelected(actor.isReactionSpent());
+      notesF.setText(actor.getNotes());
+      
+      updateF = true;
    }
    
    public void resizeComponents()
@@ -130,4 +152,16 @@ public class ActorPanel extends JPanel implements ComponentListener
    public void componentMoved(ComponentEvent ce){}
    public void componentHidden(ComponentEvent ce){}
    public void componentShown(ComponentEvent ce){repaint();}
+   
+   public void actionPerformed(ActionEvent aeRef)
+   {
+      if(aeRef.getSource() == clearB)
+      {
+         actor = new Actor();
+      }
+      setActorFromForm();
+   }
+   public void changedUpdate(DocumentEvent e){setActorFromForm();}
+   public void insertUpdate(DocumentEvent e){setActorFromForm();}
+   public void removeUpdate(DocumentEvent e){setActorFromForm();}
 }
