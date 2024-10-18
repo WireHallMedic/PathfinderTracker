@@ -37,4 +37,24 @@ public class Actor
       initiative = NULL_INIT;
       reactionSpent = false;
    }
+   
+   public String serialize()
+   {
+      return name.replace("$", "%dollar") + "$" +
+         actionsSpent + "$" +
+         reactionSpent + "$" +
+         initiative + "$" +
+         notes.replace("$", "%dollar");
+   }
+   
+   public void deserialize(String str)
+   {
+      str = str.strip();
+      String[] values = str.split("$");
+      name = values[0];
+      actionsSpent = Integer.parseInt(values[1]);
+      reactionSpent = Boolean.parseBoolean(values[2]);
+      initiative = Integer.parseInt(values[3]);
+      notes = values[4];
+   }
 }
