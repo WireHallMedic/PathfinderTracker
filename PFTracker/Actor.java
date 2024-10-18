@@ -2,23 +2,27 @@ package PFTracker;
 
 public class Actor
 {
+   public static final int NULL_INIT = 100;
 	private String name;
 	private String notes;
-	private int actionsLeft;
+	private int actionsSpent;
 	private int initiative;
-   public static final int NULL_INIT = 100;
+	private boolean reactionSpent;
 
 
 	public String getName(){return name;}
 	public String getNotes(){return notes;}
-	public int getActionsLeft(){return actionsLeft;}
+	public int getActionsSpent(){return actionsSpent;}
 	public int getInitiative(){return initiative;}
+	public boolean isReactionSpent(){return reactionSpent;}
 
 
 	public void setName(String n){name = n;}
 	public void setNotes(String n){notes = n;}
-	public void setActionsLeft(int a){actionsLeft = a;}
+	public void setActionsSpent(int a){actionsSpent = a;}
 	public void setInitiative(int i){initiative = i;}
+	public void setReactionSpent(boolean r){reactionSpent = r;}
+
    
    public Actor()
    {
@@ -29,7 +33,8 @@ public class Actor
    {
       name = "";
       notes = "";
-      actionsLeft = 3;
+      actionsSpent = 0;
       initiative = NULL_INIT;
+      reactionSpent = false;
    }
 }
