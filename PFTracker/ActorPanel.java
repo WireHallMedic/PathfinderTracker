@@ -93,6 +93,13 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       return actions;
    }
    
+   public void newTurn()
+   {
+      for(int i = 0; i < actionCB.length; i++)
+         actionCB[i].setSelected(false);
+      reactionCB.setSelected(false);
+   }
+   
    public void setActorFromForm()
    {
        actor.setName(nameF.getText());
@@ -107,7 +114,11 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       updateF = false;
       
       nameF.setText(actor.getName());
-      initF.setText(actor.getInitiative() + "");
+      int init = actor.getInitiative();
+      if(actor.getInitiative() == Actor.NULL_INIT)
+         initF.setText("");
+      else
+         initF.setText(actor.getInitiative() + "");
       for(int i = 0; i < actionCB.length; i++)
       {
          if(i < actor.getActionsSpent())
@@ -158,10 +169,12 @@ public class ActorPanel extends JPanel implements ComponentListener, ActionListe
       if(aeRef.getSource() == clearB)
       {
          actor = new Actor();
+         setFormFromActor();
       }
-      setActorFromForm();
+      else
+         setActorFromForm();
    }
-   public void changedUpdate(DocumentEvent e){setActorFromForm();}
-   public void insertUpdate(DocumentEvent e){setActorFromForm();}
-   public void removeUpdate(DocumentEvent e){setActorFromForm();}
+   public void changedUpdate(DocumentEvent e){if(updateF) setActorFromForm();}
+   public void insertUpdate(DocumentEvent e){if(updateF) setActorFromForm();}
+   public void removeUpdate(DocumentEvent e){if(updateF) setActorFromForm();}
 }

@@ -35,6 +35,16 @@ public class PFTFrame extends JFrame
       setVisible(true);
    }
    
+   public void newTurn()
+   {
+   
+   }
+   
+   public void sort()
+   {
+   
+   }
+   
    public static void main(String[] args)
    {
       PFTFrame frame = new PFTFrame();
