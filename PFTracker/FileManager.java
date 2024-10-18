@@ -9,9 +9,23 @@ import javax.swing.JOptionPane;
 
 public class FileManager
 {
-   public static final String FILE_NAME = "FateTracker.dat";
+   public static final String FILE_NAME = "PathfinderTracker.dat";
    
-	public static void write(Vector<String> output)
+   public static void save(ActorPanel[] panelList)
+   {
+      Vector<String> outputList = new Vector<String>();
+      for(ActorPanel panel : panelList)
+         outputList.add(panel.getActor().serialize());
+      write(outputList);
+   }
+   
+   public static Vector<String> load(ActorPanel[] panelList)
+   {
+      Vector<String> input = read();
+      return input;
+   }
+   
+	private static void write(Vector<String> output)
 	{
 		PrintWriter outFile = null;
 		try
@@ -31,11 +45,10 @@ public class FileManager
 	}
 
 
-	public static Vector<String> read()
+	private static Vector<String> read()
 	{
-	/*		
 		Scanner inFile = null;
-      String[] output = new String[TOTAL_LINES];
+      Vector<String> output = new Vector<String>();
 		
 		try
 		{
@@ -50,18 +63,15 @@ public class FileManager
 		
 		try
 		{
-		   int index = 0;
 			while(inFile.hasNext() == true)
 			{
-				output[index] = inFile.nextLine();
-				index++;
+				output.add(inFile.nextLine());
 			}
 		}
 		catch(ArrayIndexOutOfBoundsException arrEx){}
 
 		inFile.close();
 		
-		return output;*/
-      return null;
+		return output;
 	}
 }

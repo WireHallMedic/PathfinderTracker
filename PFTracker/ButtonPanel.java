@@ -30,12 +30,10 @@ public class ButtonPanel extends JPanel implements ActionListener
       
       saveB = new JButton("Save");
       saveB.addActionListener(this);
-      saveB.setEnabled(false);
       add(saveB);
       
       loadB = new JButton("Load");
       loadB.addActionListener(this);
-      loadB.setEnabled(false);
       add(loadB);
    }
    
@@ -45,5 +43,9 @@ public class ButtonPanel extends JPanel implements ActionListener
          parent.newTurn();
       else if(ae.getSource() == sortB)
          parent.sort();
+      else if(ae.getSource() == saveB)
+         parent.save();
+      else if(ae.getSource() == loadB)
+         parent.load();
    }
 }

@@ -40,21 +40,24 @@ public class Actor
    
    public String serialize()
    {
-      return name.replace("$", "%dollar") + "$" +
+      String nameVal = name.length() == 0 ? " " : name;
+      String notesVal = notes.length() == 0 ? " " : notes;
+      return nameVal.replace("$", "%dollar") + "$" +
          actionsSpent + "$" +
          reactionSpent + "$" +
          initiative + "$" +
-         notes.replace("$", "%dollar");
+         notesVal.replace("$", "%dollar");
    }
    
    public void deserialize(String str)
    {
-      str = str.strip();
-      String[] values = str.split("$");
-      name = values[0];
+      if(str.charAt(0) == '$')
+         str = " " + str;
+      String[] values = str.split("[$]");
+      name = values[0].strip();
       actionsSpent = Integer.parseInt(values[1]);
       reactionSpent = Boolean.parseBoolean(values[2]);
       initiative = Integer.parseInt(values[3]);
-      notes = values[4];
+      notes = values[4].strip();
    }
 }

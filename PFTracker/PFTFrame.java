@@ -77,6 +77,22 @@ public class PFTFrame extends JFrame
       return listB;
    }
    
+   public void load()
+   {
+      Vector<String> vals = FileManager.load(panel);
+      for(int i = 0; i < vals.size(); i++)
+      {
+         Actor a = new Actor();
+         a.deserialize(vals.elementAt(i));
+         panel[i].setActor(a);
+      }
+   }
+   
+   public void save()
+   {
+      FileManager.save(panel);
+   }
+   
    public static void main(String[] args)
    {
       PFTFrame frame = new PFTFrame();
