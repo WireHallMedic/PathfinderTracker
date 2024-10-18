@@ -45,10 +45,13 @@ public class ActorPanel extends JPanel implements ComponentListener
       add(actionPanel);
       
       reactionCB = new JCheckBox();
+      reactionCB.setHorizontalAlignment(SwingConstants.CENTER);
       add(reactionCB);
       
       notesF = new JTextField("");
       add(notesF);
+      
+      addComponentListener(this);
       
       setVisible(true);
       resizeComponents();
